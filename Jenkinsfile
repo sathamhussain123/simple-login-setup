@@ -9,6 +9,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    ============== echo "Build Docker Image started" ==============
                     dockerImage = docker.build("simple-login-app:${env.BUILD_ID}")
                 }
             }
