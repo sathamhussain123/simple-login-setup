@@ -6,13 +6,11 @@ pipeline {
                 checkout scm
             }
         }
-
         stage('Check Docker') {
-    steps {
-        sh 'docker --version'
-    }
-}
-
+            steps {
+                sh 'docker --version'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -21,27 +19,23 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing application...'
-                // Add testing steps here, e.g., HTTP checks
-            }
-        }
         stage('Push Docker Image') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        dockerImage.push('latest')
+                        echo "Pushing Docker Image: simple-login-app:${env.BUILD_ID}"
+                        dockerImage.push("${env.BUILD_ID}") // Push with unique build ID
                     }
                 }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
-                sh 'docker run -d -p 80:80 simple-login-app:latest'
+                script {
+                    echo "Deploying application with Docker Image: simple-login-app:${env.BUILD_ID}"
+                    sh "docker run -d -p 80:80 simple-login-app:${env.BUILD_ID}"
+                }
             }
         }
     }
 }
-
