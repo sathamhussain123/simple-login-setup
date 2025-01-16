@@ -19,6 +19,11 @@ pipeline {
                 }
             }
         }
+        stage('Check Docker Image list after docker build') {
+            steps {
+                sh 'docker images'
+            }
+        }
         stage('Push Docker Image') {
             steps {
                 script {
@@ -29,12 +34,22 @@ pipeline {
                 }
             }
         }
+          stage('Check Docker Image list after push docker image stage') {
+            steps {
+                sh 'docker images'
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
                     echo "Deploying application with Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
                     sh "docker run -d -p 400:80 sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
                 }
+            }
+        }
+        stage('Check Docker Image list after Deploy stage') {
+            steps {
+                sh 'docker images'
             }
         }
     }
