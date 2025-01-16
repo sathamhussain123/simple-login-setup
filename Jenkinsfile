@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application with Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                    sh "docker run -d -p 80:80 sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+                    sh "docker run -d -p 400:80 sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
                 }
             }
         }
