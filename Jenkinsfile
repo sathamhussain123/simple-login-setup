@@ -43,6 +43,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Check Docker Image list after Deploy stage') {
             steps {
                 sh 'docker images'
