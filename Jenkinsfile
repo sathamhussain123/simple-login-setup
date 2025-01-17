@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     echo "============= Build Docker Image started ============="
-                    dockerImage = docker.build("sathamdocker/user-authentication-service-app:${env.BUILD_ID}")
+                    dockerImage = docker.build("registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}")
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        echo "Pushing Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+                        echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
                         dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
                     }
                 }
