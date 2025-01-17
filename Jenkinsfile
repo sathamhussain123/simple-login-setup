@@ -19,11 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('Check Docker Image list after docker build') {
-            steps {
-                sh 'docker images'
-            }
-        }
+    
         stage('Push Docker Image') {
             steps {
                 script {
