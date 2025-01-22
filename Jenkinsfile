@@ -20,7 +20,7 @@ pipeline {
             }
         }
     
-        stage('Push Docker Image') {
+     ///   stage('Push Docker Image') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
@@ -29,7 +29,7 @@ pipeline {
                     }
                 }
             }
-        }
+     ///   }
           stage('Check Docker Image list after push docker image stage') {
             steps {
                 sh 'docker images'
