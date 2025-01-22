@@ -20,16 +20,16 @@ pipeline {
             }
         }
     
-     ///   stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                        dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
-                    }
-                }
-            }
-     ///   }
+     // stage('Push Docker Image') {
+     //        steps {
+     //            script {
+     //                docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
+     //                    echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+     //                    dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
+     //                }
+     //            }
+     //        }
+     //  }
           stage('Check Docker Image list after push docker image stage') {
             steps {
                 sh 'docker images'
