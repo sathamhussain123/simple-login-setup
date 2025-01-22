@@ -30,7 +30,6 @@ pipeline {
      //            }
      //        }
      //  }
-        
           stage('Check Docker Image list after push docker image stage') {
             steps {
                 sh 'docker images'
