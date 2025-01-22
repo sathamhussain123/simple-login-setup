@@ -39,7 +39,8 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application with Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                    sh "docker run -d -p 400:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+                    sh "docker run -d --name cont001 -p 400:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+                    sh "docker run -d --name cont002 -p 401:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
                 }
             }
         }
