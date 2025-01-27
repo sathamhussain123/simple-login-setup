@@ -15,6 +15,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    font-family: Arial, sans-serif; /* Ensure consistent font here */
 }
 
 input {
@@ -32,9 +33,11 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%; /* Make button the same width as the input fields */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
 }
 
+/* Button hover effect */
 button:hover {
-    background-color:  #FFD700 !important;
+    background-color: #FFD700; /* Yellow on hover */
 }
-
