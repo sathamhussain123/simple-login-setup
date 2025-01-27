@@ -50,6 +50,13 @@ pipeline {
                 sh 'docker images'
             }
         }
+post {
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()  // This will clean up the workspace
+        }
+    }
+        
     }
 }
 
