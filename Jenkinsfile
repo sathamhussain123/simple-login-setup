@@ -1,67 +1,69 @@
 pipeline {
-    //agent any
+    agent any
 
-      agent {
-        docker {
-            // image 'docker:latest'
-            // args '-v /var/run/docker.sock:/var/run/docker.sock'
+      // agent {
+      //   docker {
+      //       // image 'docker:latest'
+      //       // args '-v /var/run/docker.sock:/var/run/docker.sock'
 
-            image 'docker:dind' // Use Docker-in-Docker image
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
-            args '--privileged' // Required for DinD
-        }
-      }
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Check Docker') {
-            steps {
-                sh 'docker --version'
-            }
-        }
-        stage('Build Docker Image') {
+      //       image 'docker:dind' // Use Docker-in-Docker image
+      //       args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
+      //       args '--privileged' // Required for DinD
+      //   }
+      // }
+    // stages {
+    //     stage('Checkout') {
+    //         steps {
+    //             checkout scm
+    //         }
+    //     }
+    //     stage('Check Docker') {
+    //         steps {
+    //             sh 'docker --version'
+    //         }
+    //     }
+    //     stage('Build Docker Image') {
+    //         steps {
+    //             script {
+    //                 echo "============= Build Docker Image started ============="
+    //                 dockerImage = docker.build("registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}")
+    //             }
+    //         }
+    //     }
+    
+     stage('Push Docker Image') {
             steps {
                 script {
-                    echo "============= Build Docker Image started ============="
-                    dockerImage = docker.build("registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}")
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
+                        // echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+                        echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/jenkins-agent-kind"
+                        // dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
+                        dockerImage.push
+                    }
                 }
             }
-        }
-    
-     // stage('Push Docker Image') {
-     //        steps {
-     //            script {
-     //                docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-     //                    echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-     //                    dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
-     //                }
-     //            }
-     //        }
-     //  }
+      }
           stage('Check Docker Image list after push docker image stage') {
             steps {
                 sh 'docker images'
             }
         }
-        stage('Deploy') {
-            steps {
-                script {
-                    echo "Deploying application with Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                    sh "docker run -d --name cont001 -p 400:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                    sh "docker run -d --name cont002 -p 401:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
-                }
-            }
-        }
+    //     stage('Deploy') {
+    //         steps {
+    //             script {
+    //                 echo "Deploying application with Docker Image: sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+    //                 sh "docker run -d --name cont001 -p 400:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+    //                 sh "docker run -d --name cont002 -p 401:80 registry.hub.docker.com/sathamdocker/user-authentication-service-app:${env.BUILD_ID}"
+    //             }
+    //         }
+    //     }
         
-        stage('Check Docker Image list after Deploy stage') {
-            steps {
-                sh 'docker images'
-            }
-        }
-    }  
+    //     stage('Check Docker Image list after Deploy stage') {
+    //         steps {
+    //             sh 'docker images'
+    //         }
+    //     }
+    // }  
 // post {
 //         always {
 //             echo 'Cleaning up workspace...'
