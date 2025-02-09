@@ -9,7 +9,7 @@ pipeline {
         KIND_CLUSTER_NAME = "my-cluster"
         APP_NAME = "user-auth-app"
         APP_IMAGE = "sathamdocker/user-authentication-service-app"
-        GITHUB_DEPLOYMENT_FILE = "https://raw.githubusercontent.com/your-github-username/your-repo-name/main/deployment.yaml"
+        GITHUB_DEPLOYMENT_FILE = "https://github.com/sathamhussain123/simple-login-setup/main/deployment.yaml"
     }
     stages {
         stage('Check Tools') {
