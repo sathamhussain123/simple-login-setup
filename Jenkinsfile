@@ -58,11 +58,11 @@ pipeline {
             }
         }
     }  
-post {
-        always {
-            echo 'Cleaning up workspace...'
-            cleanWs()  // This will clean up the workspace
-        }
-    }
+// post {
+//         always {
+//             echo 'Cleaning up workspace...'
+//             cleanWs()  // This will clean up the workspace
+//         }
+//     }
 }
 
