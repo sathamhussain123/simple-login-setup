@@ -11,7 +11,7 @@ pipeline {
       //       args '--privileged' // Required for DinD
       //   }
       // }
-    // stages {
+     stages {
     //     stage('Checkout') {
     //         steps {
     //             checkout scm
