@@ -25,7 +25,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
                         echo "Pushing Docker Image: registry.hub.docker.com/sathamdocker/user-authentication-service-app:latest"
-                        dockerImage.push("${env.BUILD_ID}") // Push with build ID tag
+                        dockerImage.push("latest") // Push with build ID tag
                     }
                 }
             }
