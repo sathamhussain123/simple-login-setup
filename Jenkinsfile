@@ -1,71 +1,3 @@
-// pipeline {
-//     agent {
-//         docker {
-//             image 'sathamdocker/jenkins-agent-kind:latest'  // Use custom agent with Docker, KIND, and kubectl
-//             args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket (Host to container)
-//         }
-//     }
-//     environment {
-//         KIND_CLUSTER_NAME = "my-cluster"
-//         APP_NAME = "user-auth-app"
-//         APP_IMAGE = "sathamdocker/user-authentication-service-app"
-//         GITHUB_DEPLOYMENT_FILE = "https://github.com/sathamhussain123/simple-login-setup/main/deployment.yaml"
-//     }
-//     stages {
-//         stage('Check Tools') {
-//             steps {
-//                 sh 'docker --version'
-//                 sh 'kubectl version --client'
-//                 sh 'kind version'
-//             }
-//         }
-        
-//         stage('Create KIND Cluster (if not exists)') {
-//             steps {
-//                 script {
-//                     def clusterExists = sh(script: "kind get clusters | grep -w ${KIND_CLUSTER_NAME} || true", returnStdout: true).trim()
-//                     if (!clusterExists) {
-//                         sh "kind create cluster --name ${KIND_CLUSTER_NAME}"
-//                     } else {
-//                         echo "KIND Cluster ${KIND_CLUSTER_NAME} already exists."
-//                     }
-//                 }
-//             }
-//         }
-
-//         stage('Build Docker Image') {
-//             steps {
-//                 script {
-//                     sh "docker build -t ${APP_IMAGE}:${env.BUILD_ID} ."
-//                     sh "kind load docker-image ${APP_IMAGE}:${env.BUILD_ID} --name ${KIND_CLUSTER_NAME}"
-//                 }
-//             }
-//         }
-
-//         stage('Fetch Deployment File from GitHub') {
-//             steps {
-//                 sh "wget -O deployment.yaml ${GITHUB_DEPLOYMENT_FILE}"
-//             }
-//         }
-
-//         stage('Deploy to KIND') {
-//             steps {
-//                 sh "kubectl apply -f deployment.yaml"
-//             }
-//         }
-
-//         stage('Verify Deployment') {
-//             steps {
-//                 sh "kubectl get pods"
-//                 sh "kubectl get services"
-//             }
-//         }
-//     }
-// }
-
-
-
-
 pipeline {
      agent any
 
@@ -139,4 +71,71 @@ post {
         }
     }
 }
+
+// pipeline {
+//     agent {
+//         docker {
+//             image 'sathamdocker/jenkins-agent-kind:latest'  // Use custom agent with Docker, KIND, and kubectl
+//             args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket (Host to container)
+//         }
+//     }
+//     environment {
+//         KIND_CLUSTER_NAME = "my-cluster"
+//         APP_NAME = "user-auth-app"
+//         APP_IMAGE = "sathamdocker/user-authentication-service-app"
+//         GITHUB_DEPLOYMENT_FILE = "https://github.com/sathamhussain123/simple-login-setup/main/deployment.yaml"
+//     }
+//     stages {
+//         stage('Check Tools') {
+//             steps {
+//                 sh 'docker --version'
+//                 sh 'kubectl version --client'
+//                 sh 'kind version'
+//             }
+//         }
+        
+//         stage('Create KIND Cluster (if not exists)') {
+//             steps {
+//                 script {
+//                     def clusterExists = sh(script: "kind get clusters | grep -w ${KIND_CLUSTER_NAME} || true", returnStdout: true).trim()
+//                     if (!clusterExists) {
+//                         sh "kind create cluster --name ${KIND_CLUSTER_NAME}"
+//                     } else {
+//                         echo "KIND Cluster ${KIND_CLUSTER_NAME} already exists."
+//                     }
+//                 }
+//             }
+//         }
+
+//         stage('Build Docker Image') {
+//             steps {
+//                 script {
+//                     sh "docker build -t ${APP_IMAGE}:${env.BUILD_ID} ."
+//                     sh "kind load docker-image ${APP_IMAGE}:${env.BUILD_ID} --name ${KIND_CLUSTER_NAME}"
+//                 }
+//             }
+//         }
+
+//         stage('Fetch Deployment File from GitHub') {
+//             steps {
+//                 sh "wget -O deployment.yaml ${GITHUB_DEPLOYMENT_FILE}"
+//             }
+//         }
+
+//         stage('Deploy to KIND') {
+//             steps {
+//                 sh "kubectl apply -f deployment.yaml"
+//             }
+//         }
+
+//         stage('Verify Deployment') {
+//             steps {
+//                 sh "kubectl get pods"
+//                 sh "kubectl get services"
+//             }
+//         }
+//     }
+// }
+
+
 
